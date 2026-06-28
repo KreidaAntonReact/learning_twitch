@@ -1,0 +1,39 @@
+services:
+  twitch_backend:
+    build:
+      context: backend
+      dockerfile: backend/Dockerfile
+    container_name: twitch_backend
+    ports:
+      - "8080:8080"
+    networks:
+      - twitch_network
+    depends_on:
+      twitch_db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/twitch_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+
+  twitch_db:
+    image: postgres:17
+    container_name: twitch_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: twitch_db
+    ports:
+      - "5432:5432"
+    networks:
+      - twitch_network
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
+networks:
+  twitch_network:
+    driver: bridge
