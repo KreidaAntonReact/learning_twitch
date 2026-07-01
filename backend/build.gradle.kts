@@ -30,13 +30,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-liquibase")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("com.graphql-java:graphql-java-extended-scalars:24.0")
+    implementation("org.springframework.boot:spring-boot-starter-graphql:4.1.0")
 
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-    // Logging
-    implementation("org.zalando:logbook-spring-boot-starter:4.0.4")
 
     // jOOQ runtime
     implementation("org.jooq:jooq:3.19.32")
@@ -44,16 +43,14 @@ dependencies {
     // DB runtime
     runtimeOnly("org.postgresql:postgresql")
 
-    // jOOQ codegen (НЕ нужен реальный Postgres)
+
     jooqGenerator("org.postgresql:postgresql:42.7.10")
-
     jooqGenerator("org.jooq:jooq-meta-extensions-liquibase:3.19.32")
-
-    // SLF4J для codegen (убирает warning)
     jooqGenerator("org.slf4j:slf4j-simple:2.0.13")
 
     // Tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.graphql:spring-graphql-test:2.0.4")
 }
 
 jooq {

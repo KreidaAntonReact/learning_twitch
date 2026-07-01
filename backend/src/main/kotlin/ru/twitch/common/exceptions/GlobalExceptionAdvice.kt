@@ -1,41 +1,26 @@
 package ru.twitch.common.exceptions
 
+import graphql.ErrorType
+import graphql.GraphQLError
+import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandler
+import org.springframework.web.bind.annotation.ControllerAdvice
 import ru.twitch.common.utils.ErrorMessage
-import ru.twitch.users.utils.UserNotFoundException
-import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.RestControllerAdvice
-import java.util.Date
+import ru.twitch.common.utils.NotFoundException
 
-
-@RestControllerAdvice
+@ControllerAdvice
 class GlobalExceptionHandler {
 
-    @ExceptionHandler(DataIntegrityViolationException::class)
-    fun handleDataIntegrityException(
-        ex: DataIntegrityViolationException
-    ): ResponseEntity<ErrorMessage> {
-        val errorMessage = ErrorMessage(
-            status = HttpStatus.CONFLICT,
-            message = "Database constraint violation",
-            timestamp = Date()
+    @GraphQlExceptionHandler
+    fun handleGenericNotFound(ex: NotFoundException): GraphQLError {
+        val error = ErrorMessage(
+            errorType = ErrorType.DataFetchingException,
+            message = ex.message
         )
 
-        return ResponseEntity(errorMessage, HttpStatus.CONFLICT)
-    }
 
-    @ExceptionHandler(UserNotFoundException::class)
-    fun handleUserNotFoundException(
-        ex: UserNotFoundException
-    ): ResponseEntity<ErrorMessage> {
-        val errorMessage = ErrorMessage(
-            status = HttpStatus.NOT_FOUND,
-            message = "User id ${ex.id} not found",
-            timestamp = Date()
-        )
-
-        return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
+        return GraphQLError.newError()
+            .errorType(error.errorType)
+            .message(error.message)
+            .build()
     }
 }

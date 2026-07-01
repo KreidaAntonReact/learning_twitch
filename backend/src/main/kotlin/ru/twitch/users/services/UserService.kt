@@ -3,7 +3,6 @@ package ru.twitch.users.services
 import org.springframework.stereotype.Service
 import ru.twitch.users.domians.UserEntity
 import ru.twitch.users.dto.UserRequestCreateDto
-import ru.twitch.users.dto.UserUpdateDto
 import ru.twitch.users.reposotories.UserRepository
 import ru.twitch.users.utils.UserNotFoundException
 import java.util.UUID
@@ -16,15 +15,4 @@ class UserService(private val userRepository: UserRepository) {
     fun getAllUsers(): List<UserEntity> = userRepository.findAllUser();
 
     fun findUserById(id: UUID): UserEntity? = userRepository.findUserById(id);
-
-    fun updateUserById(id: UUID, user: UserUpdateDto): UserEntity {
-        val findUserById = userRepository.findUserById(id);
-
-        if (findUserById === null) {
-            throw UserNotFoundException(id)
-        }
-
-        return userRepository.updateUserById(id, user)
-
-    }
 }
