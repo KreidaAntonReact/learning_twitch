@@ -21,11 +21,11 @@ class SessionConfig (
     fun cookieSerialize(): CookieSerializer {
         val serializer = DefaultCookieSerializer()
 
-        serializer.setCookieName(propertiesCookie.name);
-        serializer.setCookiePath(propertiesCookie.path);
-        serializer.setCookieMaxAge(propertiesCookie.maxAge);
-        serializer.setUseSecureCookie(propertiesCookie.secure);
-        serializer.setUseHttpOnlyCookie(propertiesCookie.httpOnly);
+        serializer.setCookieName(propertiesCookie.name)
+        serializer.setCookiePath(propertiesCookie.path)
+        serializer.setCookieMaxAge(propertiesCookie.maxAge)
+        serializer.setUseSecureCookie(propertiesCookie.secure)
+        serializer.setUseHttpOnlyCookie(propertiesCookie.httpOnly)
         serializer.setSameSite(propertiesCookie.sameSite.value)
 
         return serializer
