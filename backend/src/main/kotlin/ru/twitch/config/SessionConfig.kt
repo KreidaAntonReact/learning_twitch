@@ -12,9 +12,9 @@ import org.springframework.session.web.http.DefaultCookieSerializer
     maxInactiveIntervalInSeconds = 86400,
     redisNamespace = "redis"
 )
-@EnableConfigurationProperties(ConfigPropertiesCookie::class)
+@EnableConfigurationProperties(TwitchPropertiesCookie::class)
 class SessionConfig (
-    val propertiesCookie: ConfigPropertiesCookie
+    val propertiesCookie: TwitchPropertiesCookie
 ) {
 
     @Bean

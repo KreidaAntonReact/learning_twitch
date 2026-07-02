@@ -3,8 +3,8 @@ package ru.twitch.config
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 
-@ConfigurationProperties(prefix = ConfigPropertiesCookie.PREFIX)
-class ConfigPropertiesCookie (
+@ConfigurationProperties(prefix = TwitchPropertiesCookie.PREFIX)
+class TwitchPropertiesCookie (
     /** Add option name for cookie in project */
     val name: String = "sid",
 
