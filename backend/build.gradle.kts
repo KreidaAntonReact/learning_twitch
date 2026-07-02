@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "2.2.21"
     kotlin("plugin.spring") version "2.2.21"
+    kotlin("kapt") version "2.2.21"
 
     id("org.springframework.boot") version "4.0.6"
     id("io.spring.dependency-management") version "1.1.7"
@@ -29,11 +30,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("com.graphql-java:graphql-java-extended-scalars:24.0")
-    implementation("org.springframework.boot:spring-boot-starter-graphql:4.1.0")
+    implementation("org.springframework.boot:spring-boot-starter-graphql")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jooq:jooq:3.19.32")
-    implementation("org.springframework.boot:spring-boot-starter-data-redis:4.1.0")
+    implementation("org.springframework.session:spring-session-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
 
     runtimeOnly("org.postgresql:postgresql")
 
