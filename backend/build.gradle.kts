@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "2.2.21"
     kotlin("plugin.spring") version "2.2.21"
+    kotlin("kapt") version "2.2.21"
 
     id("org.springframework.boot") version "4.0.6"
     id("io.spring.dependency-management") version "1.1.7"
@@ -23,37 +24,29 @@ repositories {
 }
 
 dependencies {
-
-    // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-jooq")
     implementation("org.springframework.boot:spring-boot-starter-liquibase")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-
-    // Kotlin
+    implementation("com.graphql-java:graphql-java-extended-scalars:24.0")
+    implementation("org.springframework.boot:spring-boot-starter-graphql")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-    // Logging
-    implementation("org.zalando:logbook-spring-boot-starter:4.0.4")
-
-    // jOOQ runtime
     implementation("org.jooq:jooq:3.19.32")
+    implementation("org.springframework.session:spring-session-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
-    // DB runtime
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
+
     runtimeOnly("org.postgresql:postgresql")
 
-    // jOOQ codegen (НЕ нужен реальный Postgres)
     jooqGenerator("org.postgresql:postgresql:42.7.10")
-
     jooqGenerator("org.jooq:jooq-meta-extensions-liquibase:3.19.32")
-
-    // SLF4J для codegen (убирает warning)
     jooqGenerator("org.slf4j:slf4j-simple:2.0.13")
 
-    // Tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.graphql:spring-graphql-test:2.0.4")
 }
 
 jooq {
