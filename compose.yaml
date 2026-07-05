@@ -11,6 +11,8 @@ services:
     depends_on:
       twitch_db:
         condition: service_healthy
+      twitch_redis:
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/twitch_db
       SPRING_DATASOURCE_USERNAME: user
@@ -31,8 +33,37 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  twitch_redis:
+    image: redis:8-alpine
+    container_name: twitch_redis
+    restart: unless-stopped
+    environment:
+      REDIS_PASSWORD: redis_password
+    command: >
+      sh -c 'redis-server --appendonly yes --requirepass $$REDIS_PASSWORD'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    ports:
+      - 6379:6379
+    networks:
+      - twitch_network
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "-a", "redis_password", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   pgdata:
+  redisdata:
 
 networks:
   twitch_network:

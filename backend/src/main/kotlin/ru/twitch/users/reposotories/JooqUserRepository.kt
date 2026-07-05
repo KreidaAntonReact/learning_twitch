@@ -4,6 +4,7 @@ import org.jooq.DSLContext
 import com.example.demo.jooq.Tables.USERS
 import com.example.demo.jooq.tables.records.UsersRecord
 import org.springframework.stereotype.Repository
+import ru.twitch.common.utils.CreateException
 import ru.twitch.common.utils.NotFoundException
 import ru.twitch.users.domians.UserEntity
 import ru.twitch.users.dto.UserRequestCreateDto
@@ -24,7 +25,7 @@ class JooqUserRepository(
                 .set(USERS.BIO, user.bio)
                 .set(USERS.DISPLAY_NAME, user.displayName)
                 .returning()
-                .fetchOne()?.toResponse() ?: throw NotFoundException("Users not found")
+                .fetchOne()?.toResponse() ?: throw CreateException("Create user error")
             )
 
 
@@ -33,11 +34,26 @@ class JooqUserRepository(
                 .fetch()
                 .map { user -> user.toResponse() })
 
-    override fun findUserById(id: UUID): UserEntity = (dsl.selectFrom(USERS)
-        .where(USERS.ID.eq(id))
-        .fetchOne()
-        ?.toResponse()
-        ?: throw NotFoundException("User not found by $id"))
+    override fun findUserById(id: UUID): UserEntity = (
+            dsl.selectFrom(USERS)
+                .where(USERS.ID.eq(id))
+                .fetchOne()
+                ?.toResponse()
+                ?: throw NotFoundException("User not found by $id"))
+
+    override fun findUserByEmail(email: String): UserEntity? = (
+            dsl.selectFrom(USERS)
+                .where(USERS.EMAIL.eq(email))
+                .fetchOne()
+                ?.toResponse()
+            )
+
+    override fun findUserByUsername(username: String): UserEntity? = (
+            dsl.selectFrom(USERS)
+                .where(USERS.USERNAME.eq(username))
+                .fetchOne()
+                ?.toResponse()
+            )
 
     private fun UsersRecord.toResponse(): UserEntity = (
             UserEntity(

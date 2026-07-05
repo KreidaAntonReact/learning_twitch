@@ -6,7 +6,21 @@ type User {
     avatar: String,
 }
 
+input CreateUserInput {
+    username: String!,
+    password: String!,
+    displayName: String!,
+    email: String!,
+    bio: String,
+    avatar: String,
+}
+
 type Query {
     users: [User!]!
     userById(id: ID!): User
 }
+
+type Mutation {
+    createUser(input: CreateUserInput!): User!
+}
+
