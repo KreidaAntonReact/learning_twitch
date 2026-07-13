@@ -36,6 +36,9 @@ dependencies {
     implementation("org.jooq:jooq:3.19.32")
     implementation("org.springframework.session:spring-session-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("io.github.oshai:kotlin-logging-jvm:8.0.4")
+    implementation("ch.qos.logback:logback-classic:1.5.37")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 

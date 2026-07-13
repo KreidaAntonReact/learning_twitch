@@ -1,6 +1,6 @@
 package ru.twitch.users.reposotories
 
-import ru.twitch.users.domians.UserEntity
+import ru.twitch.users.domian.UserEntity
 import ru.twitch.users.dto.UserRequestCreateDto
 import java.util.UUID
 

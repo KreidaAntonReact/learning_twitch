@@ -6,6 +6,7 @@ import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandle
 import org.springframework.web.bind.annotation.ControllerAdvice
 import ru.twitch.common.utils.CreateException
 import ru.twitch.common.utils.ErrorMessage
+import ru.twitch.common.utils.ForbiddenException
 import ru.twitch.common.utils.NotFoundException
 
 @ControllerAdvice
@@ -27,6 +28,19 @@ class GlobalExceptionHandler {
 
     @GraphQlExceptionHandler
     fun handleGenericCreate(ex: CreateException): GraphQLError {
+        val error = ErrorMessage(
+            errorType = ErrorType.DataFetchingException,
+            message = ex.message
+        )
+
+        return GraphQLError.newError()
+            .errorType(error.errorType)
+            .message(error.message)
+            .build()
+    }
+
+    @GraphQlExceptionHandler
+    fun handleGenericForbidden(ex: ForbiddenException): GraphQLError {
         val error = ErrorMessage(
             errorType = ErrorType.DataFetchingException,
             message = ex.message

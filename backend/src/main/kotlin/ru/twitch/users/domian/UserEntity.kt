@@ -1,4 +1,4 @@
-package ru.twitch.users.domians
+package ru.twitch.users.domian
 
 
 import java.time.LocalDateTime

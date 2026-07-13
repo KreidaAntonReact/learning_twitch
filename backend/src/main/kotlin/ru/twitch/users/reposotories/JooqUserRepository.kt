@@ -6,7 +6,7 @@ import com.example.demo.jooq.tables.records.UsersRecord
 import org.springframework.stereotype.Repository
 import ru.twitch.common.utils.CreateException
 import ru.twitch.common.utils.NotFoundException
-import ru.twitch.users.domians.UserEntity
+import ru.twitch.users.domian.UserEntity
 import ru.twitch.users.dto.UserRequestCreateDto
 import java.util.UUID
 

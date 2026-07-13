@@ -67,4 +67,5 @@ volumes:
 
 networks:
   twitch_network:
+    name: twitch_network
     driver: bridge
